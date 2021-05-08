@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/momo427/mySQL_Employee_Tracker/issues"
   },
-  "homepage": "https://github.com/momo427/mySQL_Employee_Tracker#readme"
+  "homepage": "https://github.com/momo427/mySQL_Employee_Tracker#readme",
+  "dependencies": {
+    "inquirer": "^8.0.0",
+    "mysql": "^2.18.1"
+  }
 }
