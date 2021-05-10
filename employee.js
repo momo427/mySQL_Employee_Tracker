@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 const cTable = require("console.table");
 
 
+
 const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
@@ -23,7 +24,7 @@ const generalSearch = () => {
       name: "action",
       type: "rawlist",
       message: "What would you like to do?",
-      choices: ["Search employee", "Search roles", "Search departments", "Add Employee", "Add Role", "Add Department", "Update Employee"],
+      choices: ["Search employee", "Search roles", "Search departments", "Add Employee", "Add Role", "Add Departments", "Update Employee"],
     })
     .then((answer) => {
       switch (answer.action) {
@@ -39,19 +40,19 @@ const generalSearch = () => {
           departmentQuery();
           break;
 
-        case "Add departments":
+        case "Add Departments":
           addDepartment();
           break;
 
-        case "Add roles":
+        case "Add Role":
           addRole();
           break;
 
-        case "Add employee":
+        case "Add Employee":
           addEmployee();
           break;
 
-        case "Add employee":
+        case "Update Employee":
           updateEmployee();
           break;
 
@@ -62,7 +63,7 @@ const generalSearch = () => {
     });
 };
 
-
+// View departments, roles, employees
 
 const employeeQuery = () => {
     let query = "SELECT * FROM employee";
@@ -100,12 +101,106 @@ const employeeQuery = () => {
 
 
 
-    
-
-
-
 // Add departments, roles, employees
 
-// View departments, roles, employees
+const addDepartment = () => {
+    inquirer
+        .prompt({
+            name: "department",
+            type: "input",
+            message: "What is the name of the new department?",
+        })
+        .then(function(answer){
+    let query = "INSERT INTO department (name) VALUE (?)";
+    connection.query (query, answer.department, function(err,res){
+        console.log(`You have successfully added a new department: ${answer.department}`)
+    })
+    addDepartment();
+})
+}
 
-// Update employee roles
+const addRole = () => {
+    inquirer
+        .prompt([
+            {
+            name: "Role_title",
+            type: "input",
+            message: "What is the name of the role you would like to add?"
+        },
+        {
+            name: "Role_salary",
+            type: "input",
+            message: "What is the salary for this role?"
+        },
+        {
+            name: "Role_Department_ID",
+            type: "input",
+            message: "What department is this role under?"
+        }
+    ])
+        .then(function(answer){
+            let query = "INSERT INTO role (title, salary, department_id) VALUE (?,?,?)";
+            connection.query(query, [answer.Role_title, answer.Role_salary, answer.Role_Department_ID], function(err,res){
+                console.log(`You have successfully added a new role: n/ ID: ${role.id} | Title: ${Role_title} | Salary: ${Role_salary} | Department ID: ${Role_Department_ID}`)
+            })
+            generalSearch();
+        })
+}
+
+const addEmployee = () => {
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            message: "What's the first name of the employee?",
+            name: "employeeFirstName"
+          },
+          {
+            type: "input",
+            message: "What's the last name of the employee?",
+            name: "employeeLastName"
+          },
+          {
+            type: "input",
+            message: "What is the employee's role id number?",
+            name: "roleID"
+          },
+          {
+            type: "input",
+            message: "What is the manager id number?",
+            name: "managerID"
+          }
+    ])
+    .then(function(answer){
+        let query = "INSERT INTO role (first_name, last_name, role_id, manager_id) VALUE (?,?,?)";
+        connection.query(query, [answer.employeeFirstName, answer.employeeLastName, answer.roleID, answer.managerID], function(err,res){
+            console.log(`You have successfully added a new employee:  ID: ${employee.id} | Firstname: ${employeeFirstName} | Lastname: ${employeeLastName} | Role ID: ${roleID} | Manager ID: ${managerID}`)
+        })
+    })
+}
+
+
+// Update employee 
+
+function updateEmployee() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "Which employee would you like to update?",
+          name: "employeeUpdate"
+        },
+  
+        {
+          type: "input",
+          message: "What do you want to update to?",
+          name: "updateRole"
+        }
+      ])
+      .then(function(answer) {
+        let query = 'UPDATE employee SET role_id=? WHERE first_name= ?'
+        connection.query(query,[answer.updateRole, answer.employeeUpdate],function(err, res) {
+            console.log(`You have successfully updated an employee:  ID: ${employee.id} | Firstname: ${employeeFirstName} | Lastname: ${employeeLastName} | Role ID: ${roleID} | Manager ID: ${managerID}`)
+        });
+      });
+  }
