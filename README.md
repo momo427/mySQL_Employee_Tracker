@@ -3,8 +3,7 @@
 ## Desription
 This is an easy to use command-line application for non-developers to view and interact with information stored in databases. 
 
-https://youtu.be/oz0AgMqO3v4
-https://www.youtube.com/watch?v=oz0AgMqO3v4
+
 
 [![Click to watch](https://youtu.be/oz0AgMqO3v4)](https://www.youtube.com/watch?v=oz0AgMqO3v4)
 
