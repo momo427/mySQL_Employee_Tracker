@@ -1,5 +1,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+const cTable = require("console.table");
+
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -11,6 +13,7 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) throw err;
+  console.log("connected as id " + connection.threadId);
   generalSearch();
 });
 
@@ -49,7 +52,7 @@ const generalSearch = () => {
           break;
 
         case "Add employee":
-          addEmployee();
+          updateEmployee();
           break;
 
         default:
@@ -97,56 +100,10 @@ const employeeQuery = () => {
 
 
 
+    
 
 
 
-
-
-
-const addEmployee = () => {
-  inquirer
-    .prompt([
-      {
-        name: "employeefirstname",
-        type: "input",
-        message: "Enter employee first name",
-      },
-      {
-        name: "employeelastname",
-        type: "input",
-        message: "Enter employee last name",
-      },
-      {
-        name: "role",
-        type: "list",
-        message: "What is their role? ",
-        choices: selectRole(),
-      },
-      {
-        name: "choice",
-        type: "rawlist",
-        message: "Whats their managers name?",
-        choices: selectManager(),
-      },
-    ])
-.then(function (val) {
-    var roleId = selectRole().indexOf(val.role) + 1
-    var managerId = selectManager().indexOf(val.choice) + 1
-    connection.query("INSERT INTO employee SET ?", 
-    {
-        first_name: val.firstName,
-        last_name: val.lastName,
-        manager_id: managerId,
-        role_id: roleId
-        
-    }, function(err){
-        if (err) throw err
-        console.table(val)
-        startPrompt()
-    })
-
-})
-}
 // Add departments, roles, employees
 
 // View departments, roles, employees
