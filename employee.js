@@ -113,9 +113,9 @@ const addDepartment = () => {
         .then(function(answer){
     let query = "INSERT INTO department (name) VALUE (?)";
     connection.query (query, answer.department, function(err,res){
-        console.log(`You have successfully added a new department: ${answer.department}`)
+        console.log("You have successfully added a new department")
     })
-    addDepartment();
+    generalSearch();
 })
 }
 
@@ -141,7 +141,7 @@ const addRole = () => {
         .then(function(answer){
             let query = "INSERT INTO role (title, salary, department_id) VALUE (?,?,?)";
             connection.query(query, [answer.Role_title, answer.Role_salary, answer.Role_Department_ID], function(err,res){
-                console.log(`You have successfully added a new role: n/ ID: ${role.id} | Title: ${Role_title} | Salary: ${Role_salary} | Department ID: ${Role_Department_ID}`)
+                console.log("You have successfully added a new role")
             })
             generalSearch();
         })
@@ -172,10 +172,11 @@ const addEmployee = () => {
           }
     ])
     .then(function(answer){
-        let query = "INSERT INTO role (first_name, last_name, role_id, manager_id) VALUE (?,?,?)";
+        let query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE (?,?,?)";
         connection.query(query, [answer.employeeFirstName, answer.employeeLastName, answer.roleID, answer.managerID], function(err,res){
-            console.log(`You have successfully added a new employee:  ID: ${employee.id} | Firstname: ${employeeFirstName} | Lastname: ${employeeLastName} | Role ID: ${roleID} | Manager ID: ${managerID}`)
+            console.log("You have successfully added a new employee")
         })
+        generalSearch();
     })
 }
 
