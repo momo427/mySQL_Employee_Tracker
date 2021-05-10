@@ -193,14 +193,15 @@ function updateEmployee() {
   
         {
           type: "input",
-          message: "What do you want to update to?",
+          message: "What is this employees new role?",
           name: "updateRole"
         }
       ])
       .then(function(answer) {
         let query = 'UPDATE employee SET role_id=? WHERE first_name= ?'
         connection.query(query,[answer.updateRole, answer.employeeUpdate],function(err, res) {
-            console.log(`You have successfully updated an employee:  ID: ${employee.id} | Firstname: ${employeeFirstName} | Lastname: ${employeeLastName} | Role ID: ${roleID} | Manager ID: ${managerID}`)
+            console.log("You have successfully updated an employee")  
         });
+        generalSearch();
       });
   }
