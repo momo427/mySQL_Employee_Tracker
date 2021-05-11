@@ -172,7 +172,7 @@ const addEmployee = () => {
           }
     ])
     .then(function(answer){
-        let query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE (?,?,?)";
+        let query = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE (?,?,?,?)";
         connection.query(query, [answer.employeeFirstName, answer.employeeLastName, answer.roleID, answer.managerID], function(err,res){
             console.log("You have successfully added a new employee")
         })
